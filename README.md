@@ -155,7 +155,3 @@ terraform apply
 ```
 6. CI/CD Setup
 Set up the GitHub Actions workflow located in ```.github/workflows/ci-cd.yml```.
-
-🙋 About the Author
-Syed Tasnim Ahmed
-Full-Stack Developer | AWS Enthusiast | Open to Collaboration
