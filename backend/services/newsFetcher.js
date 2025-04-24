@@ -1,12 +1,12 @@
 require('dotenv').config();
 const axios = require("axios");
 
-const NEWS_API_URL = "https://newsapi.org/v2/top-headlines";
+const API_URL = process.env.NEWS_API_URL;
 const API_KEY = process.env.NEWS_API_KEY;
 
 const fetchTopNews = async () => {
   try {
-    const response = await axios.get(NEWS_API_URL, {
+    const response = await axios.get(API_URL, {
       params: {
         apiKey: API_KEY,
         country: "us",
