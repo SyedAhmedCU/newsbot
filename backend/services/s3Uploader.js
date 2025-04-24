@@ -8,6 +8,9 @@ const s3 = new AWS.S3({
 
 const uploadJsonToS3 = async (s3Key, newsData) => {
   try {
+    if (!newsData || newsData.length === 0) {
+      throw new Error('❌ No news data provided'); 
+    }
     // Convert to JSON buffer
     const jsonBuffer = Buffer.from(JSON.stringify(newsData, null, 2));
     console.log(bucket, s3Key);
