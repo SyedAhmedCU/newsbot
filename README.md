@@ -1,6 +1,6 @@
 # 📰 NewsBot
 
-**NewsBot** is a cloud-native full-stack application that fetches top news headlines, summarizes them using generative AI (Gemini), and displays them in a simple web UI. The project demonstrates modern DevOps practices including CI/CD, containerization, and cloud infrastructure using AWS.
+**NewsBot** is a streamlined application that fetches news from RSS feeds, scrapes content, summarizes it using Gemini AI, and presents it through a simple web interface.
 
 ---
 
@@ -13,69 +13,77 @@
 
 ---
 
-## ⚙️ System Overview
+## ✅ Current Progress
 
-### 1. 🧠 **Backend (Node.js + Express)**
-- Fetches **top 10 headlines** from a third-party news API every 10 minutes.
-- Detects if new news is available by comparing the current headlines with the last batch.
-- Uploads new headlines to an **S3 bucket (raw data)** in JSON format.
-- Uses **Gemini API** (Generative AI) to summarize the headlines.
-- Uploads the **summarized news** to a **separate S3 bucket (summary data)**.
+### Backend (`/backend`)
 
-### 2. 🌐 **Frontend (Static HTML/JS)**
-- Fetches the summarized news from the **summary S3 bucket**.
-- Displays each article's **summary** along with a **link to the original article**.
-
----
-
-## 🧱 Project Architecture
-
-### 1. **Backend (Node.js + Express)**
-- **Responsibilities**:
-  - Fetch the **top 10 news headlines** from a third-party API every 10 minutes.
-  - Detect if new news is available by comparing the current headlines with the last batch.
-  - Upload new headlines to an **S3 bucket (raw data)** in JSON format.
-  - Use **Gemini API** (Generative AI) to summarize news articles.
-  - Upload the **summarized news** to a **separate S3 bucket (summary data)**.
-
-### 2. **Frontend (Static HTML/JS)**
-- **Responsibilities**:
-  - Fetch the summarized news from the **summary S3 bucket**.
-  - Display each article's **summary** along with a **link to the original article**.
+- **Fetch news from RSS Feed**
+  - Collects an array of objects containing: `title`, `description`, `link`, `pubDate`.
+- **Scrape full article content**
+  - For each news item, uses the `link` to scrape the full article content.
+- **Summarize content using Gemini AI**
+  - Replaces the full content with a concise, professional, bullet-point summary.
+- **API Endpoint**
+  - `GET /fetch-news` — fetches and returns the summarized news.
 
 ---
 
-### Project Directory Structure
+## 📌 Next Plans
+
+- Dockerize the backend app.
+- Use Terraform to deploy the backend infrastructure.
+- Create a simple frontend that:
+  - Fetches the summarized news JSON from S3.
+  - Displays the latest news articles with:
+    - **Title**
+    - **Description**
+    - **Publication Date**
+    - **Summary**
+
+---
+
+## 🛠️ To Do
+
+- [x] Set up Node.js Express backend.
+- [x] Integrate S3 for raw and summarized files.
+- [x] Integrate AI summarizer (Gemini API) into backend.
+- [ ] Dockerize and deploy backend to EC2.
+- [ ] Use Terraform for infrastructure setup.
+- [ ] Set up CI/CD with GitHub Actions.
+- [ ] Build simple frontend to display news.
+- [ ] Implement AWS Lambda for emailing news summaries.
+
+---
+
+## 🧱 Project Overview
+
 ```
-newsbot/
-├── backend/                # Node.js + Express server
-│   ├── app.js              # Express server entry point
-│   ├── services/           # Core services like news fetching, summarization, and S3 uploading
-│   │   ├── newsFetcher.js  # Fetches top 10 news
-│   │   ├── summarizer.js   # Summarizes news using Gemini API
-│   │   ├── s3Uploader.js   # Uploads new data to S3
-│   │   └── scheduler.js    # Cron job setup (every 10 minutes)
-│   └── utils/              # Utility functions
-│       └── compareNews.js  # Compares new headlines with last fetched headlines
-├── frontend/               # Simple static UI for displaying summarized news
-│   └── index.html          # Frontend UI to display summaries with links
-├── terraform/              # Infrastructure as Code (Terraform configuration)
-│   ├── main.tf             # EC2, IAM, S3 setup
-│   ├── s3.tf               # S3 buckets configuration
-│   └── variables.tf        # Variables for Terraform
-├── docker/                 # Docker configuration
-│   └── Dockerfile          # Dockerfile to containerize the backend
-├── .github/                # GitHub Actions workflow directory
-│   └── workflows/
-│       └── ci-cd.yml       # CI/CD pipeline setup for GitHub Actions
-├── .gitignore              # Ignored files for Git
-└── README.md               # Project documentation (this file)
+Workflows
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  RSS Feeds  │───▶│  Fetch News │───▶│  Scrape     │
+└─────────────┘    │  Endpoint   │    │  Content    │
+                   └─────────────┘    └─────────────┘
+                                             │
+                                             ▼
+                   ┌─────────────┐    ┌─────────────┐
+                   │  Gemini AI  │◀───│  Raw News   │
+                   │  Summary    │    │  (S3 JSON)  │
+                   └─────────────┘    └─────────────┘
+                          │
+                          ▼
+                   ┌─────────────┐    ┌─────────────┐
+                   │ Summarized  │───▶│  Frontend   │
+                   │ News (S3)   │    │  Display    │
+                   └─────────────┘    └─────────────┘
+                          │
+                          ▼
+                   ┌─────────────┐
+                   │  Email      │
+                   │  Alerts     │
+                   └─────────────┘
 ```
 
-
----
-
-## 🚀 Tech Stack
+### 🚀 Tech Stack
 
 | Layer         | Technologies |
 |---------------|--------------|
@@ -85,42 +93,39 @@ newsbot/
 | **Cloud**     | AWS S3, EC2 |
 | **DevOps**    | Docker, Terraform, GitHub Actions |
 
----
+### Backend (Node.js + Express)
 
-## 🔄 CI/CD Pipeline (GitHub Actions)
+- Fetch the **latest news articles** from an **RSS feed**.
+- Scrape the **full article content** from each article's link.
+- Summarize the content using **Gemini AI** in a **professional, bullet-point style**.
+- Save the **summarized news** as a JSON file in an **S3 bucket**.
+- Expose an API endpoint (`/fetch-news`) to trigger the full news fetching and summarizing flow.
+
+### Frontend (Static HTML/CSS/JS)
+
+- Fetch the **latest summarized news JSON** from the **S3 bucket**.
+- Display each news item with:
+  - **Title**
+  - **Description**
+  - **Publication Date**
+  - **Summarized Content** (AI-generated)
+  - **Link** to the original article.
+
+
+### 🔄 CI/CD Pipeline (GitHub Actions) (Not Started)
 
 The CI/CD pipeline automates:
 
 - Cloning and setting up the backend
-- Running tests (optional)
+- Running tests
 - Building and packaging Docker image
 - Deploying to AWS EC2 via SSH
-- Future support: Terraform apply
+- Deploying infrastructure changes using Terraform
+- Updates the application
 
 ---
 
-## 🖥️ Frontend Output
-
-- Lists summarized news items.
-- Each item includes:
-  - ✅ AI-generated summary.
-  - 🔗 Clickable link to the original article.
-
----
-
-## 🛠️ To Do
-
-- [ ] Set up Node.js backend.
-- [ ] S3 integration for raw and summarized files.
-- [ ] Summarizer integration in backend (Gen AI API).
-- [ ] Simple frontend.
-- [ ] Terraform for infrastructure.
-- [ ] Dockerize and deploy on EC2.
-- [ ] Complete CI/CD with GitHub Actions.
-
----
-
-## 📦 Setup Instructions
+## 📦 Setup Instructions for Local Development
 
 ### 1. Clone the repository
 
@@ -134,24 +139,34 @@ cd newsbot
 cd backend
 npm install
 ```
-Configure the Gen AI API in ```backend/services/summarizer.js.```
-Set up environment variables for AWS and Gen AI API.
+- Set up environment variables
+  - `AWS_REGION` - AWS Region Name (i.e. us-east-2)
+  - `AWS_ACCESS_KEY_ID` - AWS access key
+  - `AWS_SECRET_ACCESS_KEY` - AWS secret key
+  - `S3_BUCKET` - S3 bucket for storing news data
+  - `FULL_NEWS_DATA_PREFIX` - s3key prefix for folder path to store scraped full news data in json format
+  - `SUMMARIZED_NEWS_DATA_PREFIX` - s3key prefix for folder path to store summarized news data in json format
+  - `GEMINI_API_KEY` - Google Gemini AI API key
+  - `GEMINI_MODEL` - Google Gemini model name
+  - `PORT` - port for backend 
+  - `NEWS_RSS_FEED_URL` - Comma-separated list of RSS feed URLs
 
-3. Frontend Setup
-Open ```frontend/index.html``` in a browser.
+- Run locally
+```npm run dev```
 
-4. Docker Setup (optional)
+### 3. Docker Setup (optional)
 Build and run the Docker container:
 ```bash
 docker build -t newsbot-backend .
 docker run -p 3000:3000 newsbot-backend
 ```
-5. Terraform Setup
+### 5. Terraform Setup (optional)
 Deploy the infrastructure using Terraform:
 ```bash
 cd terraform
 terraform init
+terraform plan
 terraform apply
 ```
-6. CI/CD Setup
+### 6. CI/CD Setup
 Set up the GitHub Actions workflow located in ```.github/workflows/ci-cd.yml```.
