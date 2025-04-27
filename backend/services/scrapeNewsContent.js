@@ -26,7 +26,7 @@ async function getFullNews(url) {
  * @returns {Promise<Array<Object>>} - News items with `content` added
  */
 async function scrapeNewsContent(newsData) {
-  const results = await Promise.all(
+  const fullNewsData = await Promise.all(
     newsData.map(async (news) => {
       const content = await getFullNews(news.link);
 
@@ -39,7 +39,8 @@ async function scrapeNewsContent(newsData) {
     })
   );
 
-  return results;
+  return fullNewsData.filter(item => item !== null);
+
 }
 
 module.exports = {
