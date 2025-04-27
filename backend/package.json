@@ -1,23 +1,33 @@
 {
-  "name": "backend",
+  "name": "newsbot-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "keywords": [],
+  "keywords": [
+    "news",
+    "summarizer",
+    "rss",
+    "ai",
+    "gemini"
+  ],
   "author": "Syed Tasnim Ahmed",
-  "license": "ISC",
-  "description": "",
+  "license": "GPL-3.0-or-later",
+  "description": "Backend service for fetching, scraping, and summarizing news using Gemini AI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyedAhmedCU/newsbot"
+  },
   "dependencies": {
     "aws-sdk": "^2.1692.0",
     "axios": "^1.8.4",
     "cheerio": "^1.0.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "fs": "^0.0.1-security",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
