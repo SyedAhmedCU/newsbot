@@ -82,9 +82,10 @@ jobs:
             sudo yum update -y
             sudo yum install -y docker
             sudo yum install -y aws-cli
+            sudo usermod -aG docker ec2-user
             sudo service docker start
             sudo systemctl enable docker
-            sudo $(aws ecr get-login --no-include-email --region $AWS_REGION)
+            aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $REGISTRY
             docker stop newsbot-backend || true
             docker rm newsbot-backend || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
