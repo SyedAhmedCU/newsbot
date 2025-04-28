@@ -225,6 +225,7 @@ data "aws_s3_bucket" "existing_bucket" {
 # Output the public IP of the EC2 instance
 output "instance_public_ip" {
   value       = aws_instance.app_server.public_ip
+  sensitive = true
   description = "Public IP address of the EC2 instance"
 }
 
