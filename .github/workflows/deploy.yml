@@ -105,5 +105,5 @@ jobs:
             -e SUMMARIZED_NEWS_DATA_PREFIX=${{ secrets.SUMMARIZED_NEWS_DATA_PREFIX }} \
             -e FULL_NEWS_DATA_PREFIX=${{ secrets.FULL_NEWS_DATA_PREFIX }} \
             -e PORT=${{ secrets.PORT }} \
-            -e NEWS_RSS_FEED_URL= ${{ secrets.NEWS_RSS_FEED_URL }} \
+            -e NEWS_RSS_FEED_URL=${{ secrets.NEWS_RSS_FEED_URL }} \
             $REGISTRY/$REPOSITORY:$IMAGE_TAG
