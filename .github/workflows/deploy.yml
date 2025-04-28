@@ -91,7 +91,7 @@ jobs:
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d --name newsbot-backend \
             --log-driver=awslogs \
-            --log-opt awslogs-region=your-aws-region \
+            --log-opt awslogs-region=$AWS_REGION \
             --log-opt awslogs-group=/docker/newsbot-backend \
             --log-opt awslogs-stream=backend-logs \
             -p 3000:3000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
