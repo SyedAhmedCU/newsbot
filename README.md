@@ -48,6 +48,7 @@ Below is a screenshot of the site:
 ### Technical Improvements:
 - Separate Terraform and Docker Deployments: Currently, GitHub Actions deploy both code and infrastructure on every push.
   - Improvement: Split workflows into separate pipelines so that code updates trigger only application redeployment without Terraform provisioning unless infra changes.
+- Refactor the infrastructure setup in the future, where using modules and environment variables for better reusability and scalability will make more sense as the project grows.
 - Better Environment Management: Environment variables are passed directly via GitHub Actions.
   - Improvement: Use AWS Systems Manager Parameter Store or AWS Secrets Manager to manage and inject environment variables securely.
 - Server-Side Caching: Every news request currently hits the S3 or external API.
