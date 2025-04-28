@@ -23,6 +23,7 @@ function extractTopArticles(feed) {
 }
 
 async function fetchNewsFromRSS(){
+  console.log('Fetching news...', rssUrl);
   const feed = await getRSSFeed();
   const articles = extractTopArticles(feed);
   console.log('Fetched news:', articles);
