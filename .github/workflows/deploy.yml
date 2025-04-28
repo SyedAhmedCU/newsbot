@@ -15,6 +15,11 @@ env:
   PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
   SERVER_PUBLIC_IP: ${{ secrets.SERVER_PUBLIC_IP }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+  PORT: ${{ secrets.PORT }}
+  SUMMARIZED_NEWS_DATA_PREFIX: ${{ secrets.SUMMARIZED_NEWS_DATA_PREFIX }}
+  FULL_NEWS_DATA_PREFIX: ${{ secrets.FULL_NEWS_DATA_PREFIX }}
 
 jobs:
   terraform:
@@ -94,4 +99,16 @@ jobs:
             --log-opt awslogs-region=$AWS_REGION \
             --log-opt awslogs-group=/docker/newsbot-backend \
             --log-opt awslogs-stream=backend-logs \
-            -p 3000:3000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            -p 3000:3000 
+            -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+            -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            -e AWS_REGION=$AWS_REGION \
+            -e TF_STATE_BUCKET_NAME=$TF_STATE_BUCKET_NAME \
+            -e PRIVATE_SSH_KEY=$PRIVATE_SSH_KEY \
+            -e PUBLIC_SSH_KEY=$PUBLIC_SSH_KEY \
+            -e GEMINI_API_KEY=$GEMINI_API_KEY \
+            -e GEMINI_MODEL=$GEMINI_MODEL \
+            -e SUMMARIZED_NEWS_DATA_PREFIX=$SUMMARIZED_NEWS_DATA_PREFIX \
+            -e FULL_NEWS_DATA_PREFIX=$FULL_NEWS_DATA_PREFIX \
+            -e PORT=$PORT \
+            \$REGISTRY/$REPOSITORY:$IMAGE_TAG
