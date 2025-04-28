@@ -5,7 +5,7 @@ const { fetchNewsFromRSS, } = require('./services/fetchNewsFromRSS');
 const summarizeWithAi = require('./services/summarizeWithAi');
 const FULL_NEWS_DATA_PREFIX = process.env.FULL_NEWS_DATA_PREFIX
 const SUMMARIZED_NEWS_DATA_PREFIX = process.env.SUMMARIZED_NEWS_DATA_PREFIX
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
