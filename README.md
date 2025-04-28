@@ -2,6 +2,11 @@
 
 **NewsBot** is a streamlined application that fetches news from RSS feeds, scrapes content, summarizes it using Gemini AI, and presents it through a simple web interface.
 
+You can access the live version of the site [here](http://18.116.13.146:3000/fetch-news).
+
+Below is a screenshot of the site:
+![fetch-news demo](https://github.com/user-attachments/assets/34990fe6-d8e0-4f74-8a36-7a8beb055697)
+
 ---
 
 ## 📌 Project Purpose
@@ -30,8 +35,6 @@
 
 ## 📌 Next Plans
 
-- Dockerize the backend app.
-- Use Terraform to deploy the backend infrastructure.
 - Create a simple frontend that:
   - Fetches the summarized news JSON from S3.
   - Displays the latest news articles with:
@@ -47,9 +50,9 @@
 - [x] Set up Node.js Express backend.
 - [x] Integrate S3 for raw and summarized files.
 - [x] Integrate AI summarizer (Gemini API) into backend.
-- [ ] Dockerize and deploy backend to EC2.
-- [ ] Use Terraform for infrastructure setup.
-- [ ] Set up CI/CD with GitHub Actions.
+- [x] Use Terraform for infrastructure setup.
+- [x] Set up CI/CD with GitHub Actions.
+- [x] Dockerize and deploy backend to EC2.
 - [ ] Build simple frontend to display news.
 - [ ] Implement AWS Lambda for emailing news summaries.
 
