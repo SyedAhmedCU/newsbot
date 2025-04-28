@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
   pull_request:
     branches:
       - main
@@ -99,7 +101,7 @@ jobs:
             --log-opt awslogs-region=$AWS_REGION \
             --log-opt awslogs-group=/docker/newsbot-backend \
             --log-opt awslogs-stream=backend-logs \
-            -p 3000:3000 
+            -p 3000:3000 \
             -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
             -e AWS_REGION=$AWS_REGION \
