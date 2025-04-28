@@ -22,6 +22,7 @@ env:
   PORT: ${{ secrets.PORT }}
   SUMMARIZED_NEWS_DATA_PREFIX: ${{ secrets.SUMMARIZED_NEWS_DATA_PREFIX }}
   FULL_NEWS_DATA_PREFIX: ${{ secrets.FULL_NEWS_DATA_PREFIX }}
+  NEWS_RSS_FEED_URL: ${{ secrets.NEWS_RSS_FEED_URL }}
 
 jobs:
   terraform:
@@ -109,5 +110,6 @@ jobs:
             -e GEMINI_MODEL=$GEMINI_MODEL \
             -e SUMMARIZED_NEWS_DATA_PREFIX=$SUMMARIZED_NEWS_DATA_PREFIX \
             -e FULL_NEWS_DATA_PREFIX=$FULL_NEWS_DATA_PREFIX \
+            -e NEWS_RSS_FEED_URL=$NEWS_RSS_FEED_URL \
             -e PORT=$PORT \
             $REGISTRY/$REPOSITORY:$IMAGE_TAG
