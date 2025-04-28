@@ -69,13 +69,13 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: newsbot-backend
           IMAGE_TAG: ${{ github.sha }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_REGION: ${{ env.AWS_REGION }}
 
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.SERVER_PUBLIC_IP }}
           username: ec2-user
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
+          key: ${{ env.PRIVATE_SSH_KEY }}
           envs: AWS_REGION, REGISTRY, REPOSITORY, IMAGE_TAG, PRIVATE_SSH_KEY, PUBLIC_SSH_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY 
           script: |-
             sudo yum update -y
