@@ -14,6 +14,7 @@ env:
   PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
   PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
+  SERVER_PUBLIC_IP: ${{ secrets.SERVER_PUBLIC_IP }}
 
 jobs:
   terraform:
@@ -43,10 +44,6 @@ jobs:
         id: apply
         run: terraform apply PLAN
         working-directory: ./terraform
-      - name: Terraform Output
-        id: tf_output
-        run: |-
-          echo "SERVER_PUBLIC_IP=$(terraform output -raw instance_public_ip)" >> $GITHUB_ENV
   deploy-app:
     runs-on: ubuntu-latest
     needs: terraform
