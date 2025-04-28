@@ -47,7 +47,7 @@ jobs:
         working-directory: ./terraform
       - name: Set outputs
         id: set-ip
-        run: echo "::set-output name=instance_public_ip::$(terraform output instance_public_ip)"
+        run: echo "SERVER_PUBLIC_IP=$(terraform output -raw server_public_ip)" >> $GITHUB_OUTPUT
   deploy-app:
     runs-on: ubuntu-latest
     needs: terraform
@@ -60,7 +60,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       - name: Create ECR repository if it doesn't exist
-        run: |
+        run: |-
           aws ecr describe-repositories --repository-names newsbot-backend || aws ecr create-repository --repository-name newsbot-backend
       - name: Build and push Docker image
         env: 
